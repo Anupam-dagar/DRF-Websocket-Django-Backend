@@ -13,20 +13,20 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Restaurent_data',
+            name='Restaurant_data',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=200)),
             ],
         ),
         migrations.CreateModel(
-            name='Restaurent',
+            name='Restaurant',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('opening_time', models.TimeField()),
                 ('closing_time', models.TimeField()),
                 ('day', models.CharField(choices=[('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ('6', '6')], max_length=10)),
-                ('restaurent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.Restaurent_data')),
+                ('restaurant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.Restaurant_data')),
             ],
         ),
     ]

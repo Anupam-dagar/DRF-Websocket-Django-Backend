@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Restaurent, Restaurent_data
+from .models import Restaurant, Restaurant_data
 # Register your models here.
 
-admin.site.register(Restaurent)
-admin.site.register(Restaurent_data)
+admin.site.register(Restaurant)
+admin.site.register(Restaurant_data)
