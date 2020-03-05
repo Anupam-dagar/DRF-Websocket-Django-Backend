@@ -2,7 +2,7 @@ import csv
 import yaml
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-from api.models import Restaurant, Restaurant_data
+from api.models import Restaurant, Restaurant_names
 from datetime import datetime
 
 
@@ -14,12 +14,12 @@ class Command(BaseCommand):
         time_format = '%I %p'
 
         with open('finalhours.csv') as csv_file:
-            restaurant_data = csv.reader(csv_file, delimiter=',')
+            restaurant_names = csv.reader(csv_file, delimiter=',')
 
-            for index, data in enumerate(restaurant_data):
+            for index, data in enumerate(restaurant_names):
                 restaurant_name = data[0].strip()
                 restaurant_details = yaml.load(data[2])
-                restaurant_obj, created = Restaurant_data.objects.get_or_create(name=restaurant_name)
+                restaurant_obj, created = Restaurant_names.objects.get_or_create(name=restaurant_name)
                 for day in restaurant_details:
                     opening_time = restaurant_details[day][0]
                     closing_time = restaurant_details[day][1]

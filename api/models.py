@@ -2,8 +2,8 @@ from django.db import models
 
 # Create your models here.
 
-class Restaurant_data(models.Model):
-    name = models.CharField(max_length=200, blank=False, null=False)
+class Restaurant_names(models.Model):
+    name = models.CharField(max_length=200, blank=False, null=False, unique=True)
 
     def __str__(self):
         return self.name
@@ -22,7 +22,7 @@ class Restaurant(models.Model):
         ("6", "Sunday"),
     )
 
-    restaurant = models.ForeignKey(Restaurant_data, on_delete=models.CASCADE, blank=False, null=False)
+    restaurant = models.ForeignKey(Restaurant_names, on_delete=models.CASCADE, blank=False, null=False)
     opening_time = models.TimeField()
     closing_time = models.TimeField()
     day = models.CharField(max_length=10, blank=False, null=False, choices=DAYS_CHOICES)
