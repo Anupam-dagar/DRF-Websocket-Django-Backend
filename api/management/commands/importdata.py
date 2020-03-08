@@ -20,6 +20,8 @@ class Command(BaseCommand):
                 restaurant_name = data[0].strip()
                 restaurant_details = yaml.load(data[2])
                 restaurant_obj, created = Restaurant_names.objects.get_or_create(name=restaurant_name)
+                open_dict = {}
+                close_dict = {}
                 for day in restaurant_details:
                     opening_time = restaurant_details[day][0]
                     closing_time = restaurant_details[day][1]
@@ -31,11 +33,11 @@ class Command(BaseCommand):
                         closing_time = datetime.strptime(closing_time, time_format).time()
                     except ValueError:
                         closing_time = datetime.strptime(closing_time, time_format_with_minutes).time()
-
-                    details_obj, created = Restaurant.objects.get_or_create(
+                    open_dict[str(day)] = str(opening_time)
+                    close_dict[str(day)] = str(closing_time)
+                details_obj, created = Restaurant.objects.get_or_create(
                         restaurant = restaurant_obj,
-                        opening_time = opening_time,
-                        closing_time = closing_time,
-                        day=str(day)
+                        opening_time = open_dict,
+                        closing_time = close_dict
                         )
                 self.stdout.write(self.style.SUCCESS('Success: ' + str(index + 1) + ' rows completed.'))

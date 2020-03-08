@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.postgres.fields import JSONField
 # Create your models here.
 
 class Restaurant_names(models.Model):
@@ -23,9 +23,8 @@ class Restaurant(models.Model):
     )
 
     restaurant = models.ForeignKey(Restaurant_names, on_delete=models.CASCADE, blank=False, null=False)
-    opening_time = models.TimeField()
-    closing_time = models.TimeField()
-    day = models.CharField(max_length=10, blank=False, null=False, choices=DAYS_CHOICES)
+    opening_time = JSONField(default=dict)
+    closing_time = JSONField(default=dict)
 
     def __str__(self):
         return self.restaurant.name + ' - ' + self.day
