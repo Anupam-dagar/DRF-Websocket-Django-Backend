@@ -6,6 +6,7 @@ from .serializers import RestaurantSerializer, RestaurantnamesSerializer, UserCo
 from .models import Restaurant, Restaurant_names, UserCollections
 from rest_framework.decorators import action
 from datetime import datetime
+from .pagination import UserCollectionPagination
 # Create your views here.
 
 class RestaurantnamesListView(generics.ListCreateAPIView):
@@ -74,5 +75,20 @@ class RestaurentFilterView(generics.ListCreateAPIView):
 
         return super().get(request, *args, **kwargs)
 
-class UserCollectionsCreateView(generics.CreateAPIView):
+class UserCollectionsCreateView(generics.ListCreateAPIView):
     serializer_class = UserCollectionsSerializer
+    pagination_class = UserCollectionPagination
+
+    def get_queryset(self):
+        user_id = self.kwargs.get('user_id')
+        queryset = UserCollections.objects.filter(user__id=user_id)
+
+        return queryset
+    
+    def get(self, request, *args, **kwargs):
+        user_id = self.kwargs.get('user_id', None)
+
+        if user_id is None:
+            return Response({'error': 'Please provide a user id.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return super().get(request, *args, **kwargs)
