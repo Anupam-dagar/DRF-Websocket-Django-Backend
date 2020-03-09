@@ -28,7 +28,7 @@ class RestaurentFilterView(generics.ListCreateAPIView):
     serializer_class = RestaurantSerializer
 
     def get_queryset(self):
-        day = self.kwargs.get('day')
+        day = self.kwargs.get('day').lower()
         query_time = self.kwargs.get('query_time')
 
         if day == 'sunday':
@@ -50,7 +50,7 @@ class RestaurentFilterView(generics.ListCreateAPIView):
     
     def get(self, request, *args, **kwargs):
         valid_days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
-        day = self.kwargs.get('day')
+        day = self.kwargs.get('day').lower()
 
         if day not in valid_days:
             return Response({'error': 'Wrong day format. Please use one of "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" or "sunday"'}, status=status.HTTP_400_BAD_REQUEST)
