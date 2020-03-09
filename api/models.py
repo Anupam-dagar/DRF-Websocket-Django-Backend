@@ -27,7 +27,7 @@ class Restaurant(models.Model):
     closing_time = JSONField(default=dict)
 
     def __str__(self):
-        return self.restaurant.name + ' - ' + self.day
+        return self.restaurant.name
 
     def __unicode__(self):
-        return self.restaurant.name + ' - ' + self.day
+        return self.restaurant.name
