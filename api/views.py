@@ -9,8 +9,19 @@ from datetime import datetime
 # Create your views here.
 
 class RestaurantnamesListView(generics.ListCreateAPIView):
-    queryset = Restaurant_names.objects.all()
-    serializer_class = RestaurantnamesSerializer
+    serializer_class = RestaurantSerializer
+
+    def get_queryset(self):
+        name = self.kwargs.get('name')
+        queryset = Restaurant.objects.filter(restaurant__name__icontains=self.kwargs.get('name'))
+
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        name = self.kwargs.get('name', None)
+        if name is None:
+            return Response({'error': 'No query name provided.'}, status=status.HTTP_400_BAD_REQUEST)
+        return super().get(request, *args, **kwargs)
 
 class RestaurantnamesDetailView(generics.RetrieveDestroyAPIView):
     queryset = Restaurant_names.objects.all()
