@@ -10,6 +10,18 @@ class Command(BaseCommand):
     help = 'Imports csv data to database'
 
     def handle(self, *args, **kwargs):
+        day_mapping = {
+            0: 'monday',
+            1: 'tuesday',
+            1: 'tuesday',
+            2: 'wednesday',
+            2: 'wednesday',
+            3: 'thursday',
+            3: 'thursday',
+            4: 'friday',
+            5: 'saturday',
+            6: 'sunday'
+        }
         time_format_with_minutes = '%I:%M %p'
         time_format = '%I %p'
 
@@ -33,8 +45,8 @@ class Command(BaseCommand):
                         closing_time = datetime.strptime(closing_time, time_format).time()
                     except ValueError:
                         closing_time = datetime.strptime(closing_time, time_format_with_minutes).time()
-                    open_dict[str(day)] = str(opening_time)
-                    close_dict[str(day)] = str(closing_time)
+                    open_dict[day_mapping[day]] = str(opening_time)
+                    close_dict[day_mapping[day]] = str(closing_time)
                 details_obj, created = Restaurant.objects.get_or_create(
                         restaurant = restaurant_obj,
                         opening_time = open_dict,
