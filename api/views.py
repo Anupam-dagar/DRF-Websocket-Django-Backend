@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import RestaurantSerializer, RestaurantnamesSerializer
-from .models import Restaurant, Restaurant_names
+from .serializers import RestaurantSerializer, RestaurantnamesSerializer, UserCollectionsSerializer
+from .models import Restaurant, Restaurant_names, UserCollections
 from rest_framework.decorators import action
 from datetime import datetime
 # Create your views here.
@@ -73,3 +73,6 @@ class RestaurentFilterView(generics.ListCreateAPIView):
             return Response({'error': 'Wrong time format. Please use valid 24hr format'}, status=status.HTTP_400_BAD_REQUEST)
 
         return super().get(request, *args, **kwargs)
+
+class UserCollectionsCreateView(generics.CreateAPIView):
+    serializer_class = UserCollectionsSerializer
