@@ -115,3 +115,26 @@ class RestaurantCollectionsCreateView(generics.ListCreateAPIView):
             return Response({'error': 'Please provide a collection name.'}, status=status.HTTP_400_BAD_REQUEST)
 
         return super().get(request, *args, **kwargs)
+
+class RestaurantCollectionsListView(generics.ListCreateAPIView):
+    serializer_class = RestaurantCollectionsSerializer
+    pagination_class = UserCollectionPagination
+
+    def get_queryset(self):
+        user_id = self.kwargs.get('user_id')
+        restaurant_id = self.kwargs.get('restaurant_id')
+
+        queryset = RestaurantCollections.objects.filter(restaurant_collection__user__id=user_id, restaurant__id=restaurant_id)
+
+        return queryset
+    
+    def get(self, request, *args, **kwargs):
+        user_id = self.kwargs.get('user_id', None)
+        restaurant_id = self.kwargs.get('restaurant_id', None)
+
+        if user_id is None:
+            return Response({'error': 'Please provide a user id.'}, status=status.HTTP_400_BAD_REQUEST)
+        if restaurant_id is None:
+            return Response({'error': 'Please provide a restaurant id.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return super().get(request, *args, **kwargs)

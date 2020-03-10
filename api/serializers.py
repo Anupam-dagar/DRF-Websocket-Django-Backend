@@ -13,12 +13,12 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Restaurant
-        fields = ('restaurant', 'opening_time', 'closing_time')
+        fields = ('id', 'restaurant', 'opening_time', 'closing_time')
 
 class UserCollectionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserCollections
-        fields = ('name', 'user', 'collaborators')
+        fields = ('id', 'name', 'user', 'collaborators')
 
     def to_representation(self, instance):
         self.fields['user'] =  UserSerializer(read_only=True)
@@ -28,8 +28,8 @@ class UserCollectionsSerializer(serializers.ModelSerializer):
 class RestaurantCollectionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = RestaurantCollections
-        fields = ('restaurant_collection', 'restaurant')
-    
+        fields = ('id', 'restaurant_collection', 'restaurant')
+
     def to_representation(self, instance):
         self.fields['restaurant_collection'] =  UserCollectionsSerializer(read_only=True)
         self.fields['restaurant'] =  RestaurantSerializer(read_only=True)
