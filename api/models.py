@@ -37,7 +37,8 @@ class Restaurant(models.Model):
 class UserCollections(models.Model):
     # A collection created by a user
     name = models.CharField(max_length=200, blank=False, null=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False, related_name="user")
+    collaborators = models.ManyToManyField(User, related_name="collaborators")
 
     class Meta:
         unique_together = ('name', 'user',)
@@ -61,13 +62,3 @@ class RestaurantCollections(models.Model):
 
     def __unicode__(self):
         return self.restaurant_collection.name + ' - ' + self.restaurant_collection.user.username + ' - ' + self.restaurant.restaurant.name
-
-class Collections(models.Model):
-    user_collections = models.ForeignKey(UserCollections, on_delete=models.CASCADE, blank=False, null=False)
-    collaborators = models.ManyToManyField(User)
-
-    def __str__(self):
-        return self.user_collections.name + ' - ' + self.user_collections.user.username
-
-    def __unicode__(self):
-        return self.user_collections.name + ' - ' + self.user_collections.user.username

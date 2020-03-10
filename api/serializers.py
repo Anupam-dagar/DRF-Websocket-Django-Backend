@@ -18,10 +18,11 @@ class RestaurantSerializer(serializers.ModelSerializer):
 class UserCollectionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserCollections
-        fields = ('name', 'user')
+        fields = ('name', 'user', 'collaborators')
 
     def to_representation(self, instance):
         self.fields['user'] =  UserSerializer(read_only=True)
+        self.fields['collaborators'] = UserSerializer(read_only=True, many=True)
         return super(UserCollectionsSerializer, self).to_representation(instance)
 
 class RestaurantCollectionsSerializer(serializers.ModelSerializer):
