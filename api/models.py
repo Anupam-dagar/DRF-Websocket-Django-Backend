@@ -53,11 +53,14 @@ class RestaurantCollections(models.Model):
     restaurant_collection = models.ForeignKey(UserCollections, on_delete=models.CASCADE, blank=False, null=False)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, blank=False, null=False)
 
+    class Meta:
+        unique_together = ('restaurant_collection', 'restaurant',)
+
     def __str__(self):
-        return self.restaurant_collection.name + ' - ' + self.restaurant_collection.user.username
+        return self.restaurant_collection.name + ' - ' + self.restaurant_collection.user.username + ' - ' + self.restaurant.restaurant.name
 
     def __unicode__(self):
-        return self.restaurant_collection.name + ' - ' + self.restaurant_collection.user.username
+        return self.restaurant_collection.name + ' - ' + self.restaurant_collection.user.username + ' - ' + self.restaurant.restaurant.name
 
 class Collections(models.Model):
     user_collections = models.ForeignKey(UserCollections, on_delete=models.CASCADE, blank=False, null=False)
