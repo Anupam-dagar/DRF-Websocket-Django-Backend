@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import RestaurantSerializer, RestaurantnamesSerializer, UserCollectionsSerializer
-from .models import Restaurant, Restaurant_names, UserCollections
+from .serializers import RestaurantSerializer, RestaurantnamesSerializer, UserCollectionsSerializer, RestaurantCollectionsSerializer
+from .models import Restaurant, Restaurant_names, UserCollections, RestaurantCollections
 from rest_framework.decorators import action
 from datetime import datetime
 from .pagination import UserCollectionPagination
@@ -90,5 +90,28 @@ class UserCollectionsCreateView(generics.ListCreateAPIView):
 
         if user_id is None:
             return Response({'error': 'Please provide a user id.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return super().get(request, *args, **kwargs)
+
+class RestaurantCollectionsCreateView(generics.ListCreateAPIView):
+    serializer_class = RestaurantCollectionsSerializer
+    pagination_class = UserCollectionPagination
+
+    def get_queryset(self):
+        user_id = self.kwargs.get('user_id')
+        collection_name = self.kwargs.get('collection_name')
+
+        queryset = RestaurantCollections.objects.filter(restaurant_collection__user__id=user_id, restaurant_collection__name=collection_name)
+
+        return queryset
+    
+    def get(self, request, *args, **kwargs):
+        user_id = self.kwargs.get('user_id', None)
+        collection_name = self.kwargs.get('collection_name', None)
+
+        if user_id is None:
+            return Response({'error': 'Please provide a user id.'}, status=status.HTTP_400_BAD_REQUEST)
+        if collection_name is None:
+            return Response({'error': 'Please provide a collection name.'}, status=status.HTTP_400_BAD_REQUEST)
 
         return super().get(request, *args, **kwargs)

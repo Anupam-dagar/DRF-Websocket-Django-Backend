@@ -1,4 +1,4 @@
-from .models import Restaurant, Restaurant_names, UserCollections
+from .models import Restaurant, Restaurant_names, UserCollections, RestaurantCollections
 from appauth.serializers import UserSerializer
 from rest_framework import serializers
 
@@ -23,3 +23,13 @@ class UserCollectionsSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         self.fields['user'] =  UserSerializer(read_only=True)
         return super(UserCollectionsSerializer, self).to_representation(instance)
+
+class RestaurantCollectionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RestaurantCollections
+        fields = ('restaurant_collection', 'restaurant')
+    
+    def to_representation(self, instance):
+        self.fields['restaurant_collection'] =  UserCollectionsSerializer(read_only=True)
+        self.fields['restaurant'] =  RestaurantSerializer(read_only=True)
+        return super(RestaurantCollectionsSerializer, self).to_representation(instance)
