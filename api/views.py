@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -147,14 +147,16 @@ class RestaurantCollectionsDestroyView(generics.RetrieveDestroyAPIView):
         user_id = self.kwargs.get('user_id')
         collection_name = self.kwargs.get('collection_name')
         restaurant_id = self.kwargs.get('restaurant_id')
-        
         queryset = RestaurantCollections.objects.filter(restaurant_collection__collaborators__id=user_id, restaurant_collection__name=collection_name, restaurant__id=restaurant_id)
 
         return queryset
 
     def get_object(self):
         queryset = self.get_queryset()
-        obj = queryset[0]
+        user_id = self.kwargs.get('user_id')
+        collection_name = self.kwargs.get('collection_name')
+        restaurant_id = self.kwargs.get('restaurant_id')
+        obj = get_object_or_404(queryset,restaurant_collection__collaborators__id=user_id, restaurant_collection__name=collection_name, restaurant__id=restaurant_id)
         self.check_object_permissions(self.request, obj)
         return obj
 

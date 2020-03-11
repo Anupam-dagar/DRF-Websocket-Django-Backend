@@ -11,7 +11,7 @@ urlpatterns = [
     path('collections/<int:user_id>', UserCollectionsCreateView.as_view()),
     path('collections/<int:user_id>/restaurants/<int:restaurant_id>', RestaurantCollectionsListView.as_view()),
     path('collections/<int:user_id>/<str:collection_name>', RestaurantCollectionsCreateView.as_view()),
-    path('collections/delete/<int:pk>/<int:user_id>/<str:collection_name>/restaurants/<int:restaurant_id>', RestaurantCollectionsDestroyView.as_view()),
+    path('collections/delete/<int:user_id>/<str:collection_name>/restaurants/<int:restaurant_id>', RestaurantCollectionsDestroyView.as_view()),
     path('collections/create', UserCollectionsCreateView.as_view()),
     path('collections/add', RestaurantCollectionsCreateView.as_view()),
 ]
