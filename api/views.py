@@ -81,7 +81,7 @@ class UserCollectionsCreateView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user_id = self.kwargs.get('user_id')
-        queryset = UserCollections.objects.filter(user__id=user_id)
+        queryset = UserCollections.objects.filter(collaborators__id=user_id)
 
         return queryset
     
