@@ -101,7 +101,7 @@ class RestaurantCollectionsCreateView(generics.ListCreateAPIView):
         user_id = self.kwargs.get('user_id')
         collection_name = self.kwargs.get('collection_name')
 
-        queryset = RestaurantCollections.objects.filter(restaurant_collection__user__id=user_id, restaurant_collection__name=collection_name)
+        queryset = RestaurantCollections.objects.filter(restaurant_collection__collaborators__id=user_id, restaurant_collection__name=collection_name)
 
         return queryset
     
@@ -124,7 +124,7 @@ class RestaurantCollectionsListView(generics.ListCreateAPIView):
         user_id = self.kwargs.get('user_id')
         restaurant_id = self.kwargs.get('restaurant_id')
 
-        queryset = RestaurantCollections.objects.filter(restaurant_collection__user__id=user_id, restaurant__id=restaurant_id)
+        queryset = RestaurantCollections.objects.filter(restaurant_collection__collaborators__id=user_id, restaurant__id=restaurant_id)
 
         return queryset
     
