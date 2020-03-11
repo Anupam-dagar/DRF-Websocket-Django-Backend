@@ -173,3 +173,8 @@ class RestaurantCollectionsDestroyView(generics.RetrieveDestroyAPIView):
             return Response({'error': 'Please provide a collection name.'}, status=status.HTTP_400_BAD_REQUEST)
 
         return super().delete(request, *args, **kwargs)
+
+class UserCollectionsRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UserCollectionsSerializer
+    pagination_class = UserCollectionPagination
+    queryset = UserCollections.objects.all()

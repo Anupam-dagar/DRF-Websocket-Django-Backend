@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from .views import RestaurantnamesListView, RestaurantnamesDetailView, RestaurantListView, RestaurantDetailView, RestaurentFilterView, UserCollectionsCreateView, RestaurantCollectionsCreateView, RestaurantCollectionsListView, RestaurantCollectionsDestroyView
+from .views import RestaurantnamesListView, RestaurantnamesDetailView, RestaurantListView, RestaurantDetailView, RestaurentFilterView, UserCollectionsCreateView, RestaurantCollectionsCreateView, RestaurantCollectionsListView, RestaurantCollectionsDestroyView, UserCollectionsRetrieveUpdateDestroyAPIView
 
 urlpatterns = [
     path('names/<str:name>', RestaurantnamesListView.as_view()),
@@ -14,4 +14,5 @@ urlpatterns = [
     path('collections/delete/<int:user_id>/<str:collection_name>/restaurants/<int:restaurant_id>', RestaurantCollectionsDestroyView.as_view()),
     path('collections/create', UserCollectionsCreateView.as_view()),
     path('collections/add', RestaurantCollectionsCreateView.as_view()),
+    path('collections/update/<int:pk>', UserCollectionsRetrieveUpdateDestroyAPIView.as_view()),
 ]
