@@ -138,3 +138,36 @@ class RestaurantCollectionsListView(generics.ListCreateAPIView):
             return Response({'error': 'Please provide a restaurant id.'}, status=status.HTTP_400_BAD_REQUEST)
 
         return super().get(request, *args, **kwargs)
+
+class RestaurantCollectionsDestroyView(generics.RetrieveDestroyAPIView):
+    serializer_class = RestaurantCollectionsSerializer
+    pagination_class = UserCollectionPagination
+
+    def get_queryset(self):
+        user_id = self.kwargs.get('user_id')
+        collection_name = self.kwargs.get('collection_name')
+        restaurant_id = self.kwargs.get('restaurant_id')
+        
+        queryset = RestaurantCollections.objects.filter(restaurant_collection__collaborators__id=user_id, restaurant_collection__name=collection_name, restaurant__id=restaurant_id)
+
+        return queryset
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = queryset[0]
+        self.check_object_permissions(self.request, obj)
+        return obj
+
+    def delete(self, request, *args, **kwargs):
+        user_id = self.kwargs.get('user_id', None)
+        collection_name = self.kwargs.get('collection_name', None)
+        restaurant_id = self.kwargs.get('restaurant_id', None)
+
+        if user_id is None:
+            return Response({'error': 'Please provide a user id.'}, status=status.HTTP_400_BAD_REQUEST)
+        if restaurant_id is None:
+            return Response({'error': 'Please provide a restaurant id.'}, status=status.HTTP_400_BAD_REQUEST)
+        if collection_name is None:
+            return Response({'error': 'Please provide a collection name.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return super().delete(request, *args, **kwargs)
