@@ -6,6 +6,7 @@ from .serializers import RestaurantSerializer, RestaurantnamesSerializer, UserCo
 from .models import Restaurant, Restaurant_names, UserCollections, RestaurantCollections
 from rest_framework.decorators import action
 from datetime import datetime
+from django.contrib.auth.models import User
 from .pagination import UserCollectionPagination
 # Create your views here.
 
@@ -178,3 +179,25 @@ class UserCollectionsRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroy
     serializer_class = UserCollectionsSerializer
     pagination_class = UserCollectionPagination
     queryset = UserCollections.objects.all()
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        add_collaborator_email = request.data.get("add_collaborator_email", None)
+        remove_collaborator_email = request.data.get("remove_collaborator_email", None)
+        
+        if add_collaborator_email is not None:
+            try:
+                user_object = User.objects.get(email=add_collaborator_email)
+                instance.collaborators.add(user_object)
+            except:
+                pass
+        if remove_collaborator_email is not None:
+            try:
+                user_object = User.objects.get(email=remove_collaborator_email)
+                instance.collaborators.remove(user_object)
+            except:
+                pass
+
+        instance.save()
+
+        return super().update(request, *args, **kwargs)
