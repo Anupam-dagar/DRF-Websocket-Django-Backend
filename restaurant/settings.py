@@ -120,7 +120,7 @@ REST_FRAMEWORK = {
 }
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
+    'http://localhost:3000','https://glintsfrontend.herokuapp.com'
 ]
 
 ASGI_APPLICATION = 'restaurant.routing.application'
