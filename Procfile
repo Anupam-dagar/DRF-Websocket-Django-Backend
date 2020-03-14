@@ -1,1 +1,1 @@
-web: daphne restaurant.asgi --log-file -
+web: daphne restaurant.asgi:application
