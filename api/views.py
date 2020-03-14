@@ -11,6 +11,9 @@ from .pagination import UserCollectionPagination
 # Create your views here.
 
 class RestaurantnamesListView(generics.ListCreateAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
     serializer_class = RestaurantSerializer
 
     def get_queryset(self):
@@ -26,18 +29,30 @@ class RestaurantnamesListView(generics.ListCreateAPIView):
         return super().get(request, *args, **kwargs)
 
 class RestaurantnamesDetailView(generics.RetrieveDestroyAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
     queryset = Restaurant_names.objects.all()
     serializer_class = RestaurantnamesSerializer
 
 class RestaurantListView(generics.ListCreateAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
 
 class RestaurantDetailView(generics.RetrieveDestroyAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
 
 class RestaurentFilterView(generics.ListCreateAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
     serializer_class = RestaurantSerializer
 
     def get_queryset(self):
@@ -77,6 +92,9 @@ class RestaurentFilterView(generics.ListCreateAPIView):
         return super().get(request, *args, **kwargs)
 
 class UserCollectionsCreateView(generics.ListCreateAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
     serializer_class = UserCollectionsSerializer
     pagination_class = UserCollectionPagination
 
@@ -95,6 +113,9 @@ class UserCollectionsCreateView(generics.ListCreateAPIView):
         return super().get(request, *args, **kwargs)
 
 class RestaurantCollectionsCreateView(generics.ListCreateAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
     serializer_class = RestaurantCollectionsSerializer
     pagination_class = UserCollectionPagination
 
@@ -118,6 +139,9 @@ class RestaurantCollectionsCreateView(generics.ListCreateAPIView):
         return super().get(request, *args, **kwargs)
 
 class RestaurantCollectionsListView(generics.ListCreateAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
     serializer_class = RestaurantCollectionsSerializer
     pagination_class = UserCollectionPagination
 
@@ -141,6 +165,9 @@ class RestaurantCollectionsListView(generics.ListCreateAPIView):
         return super().get(request, *args, **kwargs)
 
 class RestaurantCollectionsDestroyView(generics.RetrieveDestroyAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
     serializer_class = RestaurantCollectionsSerializer
     pagination_class = UserCollectionPagination
 
@@ -176,6 +203,9 @@ class RestaurantCollectionsDestroyView(generics.RetrieveDestroyAPIView):
         return super().delete(request, *args, **kwargs)
 
 class UserCollectionsRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
     serializer_class = UserCollectionsSerializer
     pagination_class = UserCollectionPagination
     queryset = UserCollections.objects.all()
