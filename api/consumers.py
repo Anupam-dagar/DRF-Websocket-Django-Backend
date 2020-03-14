@@ -51,6 +51,21 @@ class CollectionConsumer(WebsocketConsumer):
                 action_type = 'SUCCESS_ADD_RESTAURANT_TO_COLLECTION'
             except:
                 action_type = 'FAILURE_ADD_RESTAURANT_TO_COLLECTION'
+        
+        if action_type == 'WEBSOCKET_REMOVE_MESSAGE':
+            user_id = message['user']
+            collection_name = message['collectionName']
+            restaurant_id = message['restaurantId']
+
+            try:
+                restaurant_object = RestaurantCollections.objects.get(restaurant_collection__collaborators__id=user_id, restaurant_collection__name=collection_name, restaurant__id=restaurant_id)
+                restaurant_object.delete()
+                restaurants = RestaurantCollections.objects.filter(restaurant_collection__collaborators__id=user_id, restaurant_collection__name=collection_name)
+                restaurants_data = RestaurantCollectionsSerializer(restaurants, many=True).data
+                return_data = {'success': {'success': collection_name}, 'restaurants': restaurants_data }
+                action_type = 'SUCCESS_DELETE_RESTAURANTS_IN_COLLECTION'
+            except:
+                action_type = 'FAILURE_DELETE_RESTAURANTS_IN_COLLECTION'
 
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
