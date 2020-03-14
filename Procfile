@@ -1,1 +1,1 @@
-web: gunicorn restaurant.wsgi --log-file -
+web: daphne restaurant.asgi --log-file -
