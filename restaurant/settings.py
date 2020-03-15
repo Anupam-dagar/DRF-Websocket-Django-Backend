@@ -83,9 +83,9 @@ WSGI_APPLICATION = 'restaurant.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DBNAME'),
-        'USER': os.environ.get('DBUSER'),
-        'PASSWORD': os.environ.get('DBPASSWORD'),
+        'NAME': os.environ.get('DBNAME', 'projectdb'),
+        'USER': os.environ.get('DBUSER', 'projectdbuser'),
+        'PASSWORD': os.environ.get('DBPASSWORD', 'projectdbpassword'),
         'HOST': 'localhost',
         'PORT': '',
     }
