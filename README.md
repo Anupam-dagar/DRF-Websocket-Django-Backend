@@ -37,3 +37,15 @@ export DBPASSWORD="database user's password"
 12. Run the server using `python manage.py runserver`
 13. Use keyboard interrupt `Ctrl + C` to stop the server.
 14. For subsequent runs, just activate the virtual environment and run the server using `python manage.py runserver`.
+15. Admin panel can be accessed at `/admin`.
+
+## Technologies Used:
+1. Python3
+2. Django
+3. Django Channels (websocket support for realtime updates)
+4. Django Rest Framework (for creating REST API's)
+5. Django Rest Knox (for JWT Token authentication)
+6. PostgreSQL Database
+
+## License
+MIT
