@@ -220,13 +220,13 @@ class UserCollectionsRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroy
                 user_object = User.objects.get(email=add_collaborator_email)
                 instance.collaborators.add(user_object)
             except:
-                pass
+                return Response({'error': 'No user with that email exists.'}, status=status.HTTP_400_BAD_REQUEST)
         if remove_collaborator_email is not None:
             try:
                 user_object = User.objects.get(email=remove_collaborator_email)
                 instance.collaborators.remove(user_object)
             except:
-                pass
+                return Response({'error': 'There was an error removing collaborator.'}, status=status.HTTP_400_BAD_REQUEST)
 
         instance.save()
 
