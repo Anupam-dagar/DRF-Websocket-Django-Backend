@@ -8,7 +8,7 @@ Deployed at [https://glintsbackend.herokuapp.com](https://glintsbackend.herokuap
 
 1. Clone the repository using `git clone https://github.com/Anupam-dagar/Glints-Assesment-Part-2-Backend.git`
 2. Change directory to repository using `cd Glints-Assesment-Part-2-Backend`
-3. Create a new Python 3 virtual environment using `virutalenv -p python3 venv`. If you don't have `virtualenv` installed then install it first using `pip3 install virtualenv`.
+3. Create a new Python 3 virtual environment using `virtualenv -p python3 venv`. If you don't have `virtualenv` installed then install it first using `pip3 install virtualenv`.
 4. Activate the virtual environment using `source venv/bin/activate`.
 5. Install requirements using `pip install -r requirements.txt`.
 6. This project uses postgresql as database, before running the server, a postgres db needs to be setup. Run the following commands to setup a new database for the project.
