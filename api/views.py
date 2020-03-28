@@ -58,6 +58,7 @@ class RestaurentFilterView(generics.ListCreateAPIView):
     def get_queryset(self):
         day = self.kwargs.get('day').lower()
         query_time = self.kwargs.get('query_time')
+        query_name = self.kwargs.get('query_name', None)
 
         if day == 'sunday':
             queryset = Restaurant.objects.filter(opening_time__sunday__lte=query_time, closing_time__sunday__gt=query_time)
@@ -74,11 +75,19 @@ class RestaurentFilterView(generics.ListCreateAPIView):
         if day == 'saturday':
             queryset = Restaurant.objects.filter(opening_time__saturday__lte=query_time, closing_time__saturday__gt=query_time)
 
+        if query_name is not None:
+            queryset = queryset.filter(restaurant__name__icontains=query_name)
+
         return queryset
     
     def get(self, request, *args, **kwargs):
         valid_days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
-        day = self.kwargs.get('day').lower()
+        day = self.kwargs.get('day', None)
+
+        if day is None:
+            return Response({'error': 'Please provide a day.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        day = day.lower()
 
         if day not in valid_days:
             return Response({'error': 'Wrong day format. Please use one of "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" or "sunday"'}, status=status.HTTP_400_BAD_REQUEST)
